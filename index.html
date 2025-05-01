@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Product List</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f4f4f4;
+    }
+    h1 {
+      text-align: center;
+    }
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .card {
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    .card h2 {
+      font-size: 1.2em;
+      margin: 10px 0 5px;
+    }
+    .card p {
+      font-size: 0.9em;
+      color: #555;
+    }
+    .price {
+      color: #28a745;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Product Showcase</h1>
+  <div class="container" id="products"></div>
+
+  <script>
+    fetch("https://dummyjson.com/products")
+      .then(res => res.json())
+      .then(data => {
+        const products = data.products;
+        const container = document.getElementById("products");
+        products.forEach(product => {
+          const card = document.createElement("div");
+          card.className = "card";
+          card.innerHTML = `
+            <img src="${product.thumbnail}" alt="${product.title}">
+            <h2>${product.title}</h2>
+            <p class="price">$${product.price}</p>
+            <p>${product.description}</p>
+          `;
+          container.appendChild(card);
+        });
+      });
+  </script>
+</body>
+</html>
